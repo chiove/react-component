@@ -1,68 +1,58 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### 1.什么是设计模式
+在某些场景下，针对某类问题的某种解决方案
 
-## Available Scripts
+#### 2.首先了解下react的生命周期
 
-In the project directory, you can run:
+#### 3.react的组件的一些解决方案
 
-### `yarn start`
+(1)容器与展示组件
+ 也叫有状态组件和无状态组件，顾名思义，有状态就是在组件内部跟像redux的数据进行了绑定，无状态组件就是只根据自身 state 及接收自父组件的 props做渲染，并不直接与外部数据源进行沟通
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+ 举个例子：
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+这种设计就是拆分成了两个组件，改动只需要修改有状态组件也就是容器组件，无状态 的展示组件的可复用性更高，唯一的缺点就是增加了代码的跳转性，所以我们要根据业务的实际情况来判断怎么样设计。
 
-### `yarn test`
+(2)高阶组件
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+首先来看一下在react中高阶组件的定义，高阶组件本质是利用一个函数，该函数接收 React 组件作为参数，并返回新的组件。
 
-### `yarn build`
+所以它的应用场景就是当我们要复用一个组件的逻辑时，我们就要选择来使用高阶组件这种设计方式。
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ 举个例子：
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+注意事项
+1，高阶组件，在报错的时候很难定位错误。
+2，不要在render中调用高阶组件函数。
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+(3)render props
 
-### `yarn eject`
+跟高阶组件类似，返回子组件，内部处理逻辑返回不同的props，与高阶组件的区别就是，像这种的应用场景一般是组件样式一样，逻辑不同，高阶组件是通过判断渲染不同组件。
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+(4)context 模式
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+在一个普通的react应用中，数据是通过prpos至上而下进行传递，对于某些特殊的需求，逐步传递是很繁琐的，ontext提供了在组件间共享值的方式。
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+注意事项就是在父级渲染的时候，防止value属性总是被赋值为新的对象，将value属性提到父节点的state中。
 
-## Learn More
+(5)组合组件
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+组合组件的作用就是当子组件所需要的props在父组件会封装好，引用子组件的时候就没必要传递所有props了，
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```javascript
 
-### Code Splitting
+<TabItem active={true} onClick={this.onClick}>1</TabItem>
+<TabItem active={false} onClick={this.onClick}>2</TabItem>
+<TabItem active={false} onClick={this.onClick}>3</TabItem>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+```
 
-### Analyzing the Bundle Size
+像这种就需要每次增加一个子组件都要传递一次并绑定一个事件
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+组合组件核心的两个方法是React.Children.map和React.cloneElement。React.Children.map 用来遍历获得组件的子元素。React.cloneElement 则用来复制元素，这个函数第一个参数就是被复制的元素，第二个参数可以增加新产生元素的 props ，我们就是利用这个函数，把想要的 props 传入子元素。
+组合组件设计模式一般应用在一些共享组件上。如 select 和 option , Tab 和TabItem 等，通过组合组件，只需要传递子组件，
 
-### Making a Progressive Web App
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+(6)继承
+    注意：
+    官方不是推荐使用继承，有两个缺点就是，不管子类愿意不愿意，都必须继承父类所有的属性和方法。第二个就是js中class并不直接支持多继承。这样使得继承相对于组合组件缺少了灵活性以及可扩展性。
