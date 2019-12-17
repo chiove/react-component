@@ -6,7 +6,7 @@ const TestProvider = TestContext.Provider;
     render() {
       return (
         <div>
-          <TestProvider value={{textColor: 'pink'}}>
+          <TestProvider value={{textColor: 'red'}}>
             <Page/>
           </TestProvider>
         </div>
