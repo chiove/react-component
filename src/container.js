@@ -9,6 +9,7 @@ import Teacher from'./component/two/teacher';
 
 import PropsEnhance from'./component/three/enhance';
 
+import Context from'./component/four/father';
 
 const EnhancedComponent = enhance(Student,Teacher);
 
@@ -43,10 +44,12 @@ class index extends React.Component{
                 {/* 高阶组件 */}
                 {/* <EnhancedComponent ref={(ref)=>this.enhanceRef=ref} a={'22'}/> */}
 
-                <PropsEnhance>
+                {/* renderProps*/}
+                {/* <PropsEnhance>
                     {props => <Student a={props}/>}
-                </PropsEnhance>
+                </PropsEnhance> */}
 
+                <Context/>
             </div>
         )
     }
