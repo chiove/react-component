@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import Life from'./component/life';
+import Test from'./component/life';
 import One from'./component/one/state';
 
 import enhance from'./component/two/enhance';
@@ -15,6 +15,9 @@ import Tab from'./component/five/father';
 import TabItem from'./component/five/child';
 
 
+import Loading from'./component/loading/index';
+
+
 const EnhancedComponent = enhance(Student,Teacher);
 
 class index extends React.Component{
@@ -22,10 +25,11 @@ class index extends React.Component{
         super(props);
         this.state={
             test:1,
+            visible:false
         }
     }
     componentDidMount(){
-        // console.log(this.enhanceRef)
+        console.log(this.enhanceRef);
     }
 
 
@@ -33,14 +37,8 @@ class index extends React.Component{
     render(){
         return(
             <div>
-                {/* 生命周期 */}
-               <Life
-                    test={this.state.test}
-                />
-                <button onClick={()=>{
-                  this.setState({test:2})
-                }}>点击</button>
-
+                {/* 测试 */}
+               <Test/>
 
                 {/* 容器组件和展示组件 */}
                 {/* <One/> */}
@@ -61,7 +59,15 @@ class index extends React.Component{
                 {/* <Tab>
                     <TabItem>你猜</TabItem>
                     <TabItem>2</TabItem>
+                    <TabItem>你猜</TabItem>
+                    <TabItem>2</TabItem>
+                    <TabItem>rgdg</TabItem>
+                    <TabItem>2</TabItem>
                 </Tab> */}
+                {/* <Loading text='你好你好你好你好你好你好你好你好你好你好···' loading={this.state.visible} color='red'/>
+                <button onClick={()=>{
+                      this.setState({visible:true});
+                }}>点击</button> */}
             </div>
         )
     }

@@ -9,19 +9,17 @@ import React from 'react';
 
     render() {
       const {children} = this.props;
-      const component = React.Children.map(children,(item,index)=>{
-        if (item.type) {
-          return React.cloneElement(item, {
-            active: this.state.activeIndex === index,
-            onClick: () => this.setState({activeIndex: index})
-          });
-        } else {
-          return item;
-        }
+      // const component = React.Children.map(children,(item,index)=>{
+      //   console.log(item);
+      // })
+      console.log(React.Children.map)
+       const component = children.map((item,index) => {
+        console.log(item);
+        return item
       })
       return (
         <div>
-          {component}
+        {component}
         </div>
       )
     }
