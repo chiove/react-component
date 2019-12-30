@@ -17,6 +17,7 @@ import TabItem from'./component/five/child';
 
 import Loading from'./component/loading/index';
 
+import Css from'./component/css/index';
 
 const EnhancedComponent = enhance(Student,Teacher);
 
@@ -37,8 +38,9 @@ class index extends React.Component{
     render(){
         return(
             <div>
+                <Css/>
                 {/* 测试 */}
-               <Test/>
+               {/* <Test/> */}
 
                 {/* 容器组件和展示组件 */}
                 {/* <One/> */}
